@@ -1,0 +1,161 @@
+{
+  "name": "notion-auto-entry",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "submit-form",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -340,
+        -180
+      ],
+      "id": "25189f5e-5e99-47ab-b345-add6c4fa3131",
+      "name": "Webhook",
+      "webhookId": "c35eae34-019c-4a88-a3c6-4da8f522a880"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "=23d8f04d754080f1a643e1598cbfe489",
+          "mode": "id"
+        },
+        "title": "={{ $json[\"Employee Name\"] }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Current Project|rich_text",
+              "textContent": "={{ $json[\"Current Project\"] }}"
+            },
+            {
+              "key": "Department|select",
+              "selectValue": "={{ $json.Department }}"
+            },
+            {
+              "key": "Notes|rich_text",
+              "textContent": "={{ $json.Notes }}"
+            },
+            {
+              "key": "Deadline|date",
+              "date": "={{ $json.Deadline }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        140,
+        -180
+      ],
+      "id": "220456a8-6217-4bc1-8723-9a06a5a3ca40",
+      "name": "Notion",
+      "credentials": {
+        "notionApi": {
+          "id": "ReQB2Ceet2wvcNuJ",
+          "name": "Notion account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7ebe22e-857c-4e8a-a99c-54a2bf3f7ac7",
+              "name": "Employee Name",
+              "value": "={{ $json.body[\"Employee Name\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "2785695c-86c4-4807-999b-37d9a6ccb747",
+              "name": "Department",
+              "value": "={{ $json.body.Department }}",
+              "type": "string"
+            },
+            {
+              "id": "ece05390-bbd5-454e-80f7-ac47d13f5a2c",
+              "name": "Current Project",
+              "value": "={{ $json.body[\"Current Project\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "8624253f-3b8b-44f7-8975-aa75d51adb37",
+              "name": "Progress Status",
+              "value": "={{ $json.body[\"Progress Status\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "02920a03-ba58-4407-a016-7b503a01f087",
+              "name": "Deadline",
+              "value": "={{ $json.body.Deadline }}",
+              "type": "string"
+            },
+            {
+              "id": "34d30897-ded8-4068-83f4-3afb64769ec0",
+              "name": "Notes",
+              "value": "={{ $json.body.Notes }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -80,
+        40
+      ],
+      "id": "f418974a-d77f-4937-9c1f-63f79c326a52",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Notion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c37272b6-29a8-4876-8228-eec048e21133",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2de80f5914130ddac7b892de4e5de570f30cd22f0b2bd794e45e389d7524d1e9"
+  },
+  "id": "gQSmKyNzAdMZ6WZj",
+  "tags": []
+}
